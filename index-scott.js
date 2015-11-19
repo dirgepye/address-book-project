@@ -1,7 +1,7 @@
 // Load dependencies
 var inquirer = require("inquirer");
 
-//The array that will hold all of the contacts.
+
 var addressBook = [];
 
 // Create object constructor
@@ -32,6 +32,8 @@ function Email(email) {
     this.email = email;
 }
 
+
+
 // Gather the data and Populate the contact
 var contact = new Contact();
 contact.addresses.home = new Address();
@@ -43,7 +45,6 @@ contact.phones.other = new Phone();
 contact.emailAddresses.home = new Email();
 contact.emailAddresses.work = new Email();
 contact.emailAddresses.other = new Email();
-
 // Push Contact into addressBook
 addressBook.push(contact);
 
