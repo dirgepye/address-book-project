@@ -1,0 +1,27 @@
+{
+  "name": "address-book",
+  "version": "1.0.0",
+  "description": "Scott and Shawn's super cool address book",
+  "main": "index.js",
+  "dependencies": {
+    "inquirer": "^0.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dirgepye/address-book-project.git"
+  },
+  "keywords": [
+    "address",
+    "book"
+  ],
+  "author": "Scott and Shawn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dirgepye/address-book-project/issues"
+  },
+  "homepage": "https://github.com/dirgepye/address-book-project#readme"
+}
