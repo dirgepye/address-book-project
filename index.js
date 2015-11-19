@@ -1,7 +1,8 @@
-// Load dependencies
+// Load dependencies // "use strict"; 
 var inquirer = require("inquirer");
 
-//The array that will hold all of the contacts.
+// ----------------------------------------------------------------------------
+// The array that will hold all of the contacts.
 var addressBook = [];
 
 // Create object constructor
@@ -24,7 +25,7 @@ function Address(line1, line2, city, province, postalCode, country) {
 }
 
 function Phone(number, kind) {
-    this.kind = kind;           // possibilities: landline, cell, fax
+    this.kind = kind; // possibilities: landline, cell, fax
     this.number = number;
 }
 
@@ -32,20 +33,69 @@ function Email(email) {
     this.email = email;
 }
 
-// Gather the data and Populate the contact
-var contact = new Contact();
-contact.addresses.home = new Address();
-contact.addresses.work = new Address();
-contact.addresses.other = new Address();
-contact.phones.home = new Phone();
-contact.phones.work = new Phone();
-contact.phones.other = new Phone();
-contact.emailAddresses.home = new Email();
-contact.emailAddresses.work = new Email();
-contact.emailAddresses.other = new Email();
+// START-----------------------------------------------------------------------
+// Inquirer Questionnaire to gather Contact Data
 
-// Push Contact into addressBook
-addressBook.push(contact);
+var personQuestions = [{
+        type: "input",
+        name: "firstName",
+        message: "Please enter the first name:",
+        validate: (function(value) {
+            if (value) {
+                return true;
+            }
+            else {
+                return "Please enter a first name:";
+            }
+        })
+    }, {
+        type: "input",
+        name: "lastName",
+        message: "Please enter the family name:",
+        validate: (function(value) {
+            if (value) {
+                return true;
+            }
+            else {
+                return "Please enter a family name:";
+            }
+        })
+    }, {
+        type: "input",
+        name: "birthday",
+        message: "Please enter the birthday",
+        validate: (function(value) {
+            if (value) {
+                return true;
+            }
+            else {
+                return "Please enter the date of birth";
+            }
+        })
+    }
+];
 
-//////////////////////////
-console.log (addressBook);
+// Inquirer Questionnaire to gather Contact Data
+// END ------------------------------------------------------------------------
+
+
+inquirer.prompt(personQuestions, function(answers) {
+    
+    // ------------------------------------------------------------------------
+    // Gather the data and Populate the contact
+    var contact = new Contact(answers.firstName, answers.lastName, answers.birthday);
+    // contact.addresses.home = new Address();
+    // contact.addresses.work = new Address();
+    // contact.addresses.other = new Address();
+    // contact.phones.home = new Phone();
+    // contact.phones.work = new Phone();
+    // contact.phones.other = new Phone();
+    // contact.emailAddresses.home = new Email();
+    // contact.emailAddresses.work = new Email();
+    // contact.emailAddresses.other = new Email();
+
+    // Push Contact into addressBook
+    addressBook.push(contact);
+
+    console.log(addressBook);
+});
