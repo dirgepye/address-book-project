@@ -35,7 +35,7 @@ function Email(email) {
     this.email = email;
 }
 
-// START-----------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // Inquirer Questionnaire to gather Contact Data
 
 // MAIN MENU
@@ -219,7 +219,11 @@ function createEmailEntry(type) {
 }
 
 // ----------------------------------------------------------------------------
+// CLI-TABLE Configuration
 
+
+// ----------------------------------------------------------------------------
+// Main Program
 inquirer.prompt(mainMenu, function(menuChoice) {
     if (menuChoice.main === "New Entry") {
         inquirer.prompt(personQuestions, function(answers) {
@@ -241,7 +245,8 @@ inquirer.prompt(mainMenu, function(menuChoice) {
                 inquirer.prompt(questionnaire, function(contactData) {
 
                     // Gather the data and Populate the contact
-                    var contact = new Contact(answers.firstName, answers.lastName, answers.birthday);
+                    var contact = new Contact(answers.firstName,
+                        answers.lastName, answers.birthday);
                     if (contactData.homeline1) {
                         contact.addresses.home =
                             new Address(contactData.homeline1,
@@ -296,15 +301,59 @@ inquirer.prompt(mainMenu, function(menuChoice) {
 
                     // Push Contact into addressBook
                     addressBook.push(contact);
-                });
 
+                    // Display the New Contact in CLI-TABLE
+                    var table = new Table({
+                        chars: {
+                            'top': '═',
+                            'top-mid': '╤',
+                            'top-left': '╔',
+                            'top-right': '╗',
+                            'bottom': '═',
+                            'bottom-mid': '╧',
+                            'bottom-left': '╚',
+                            'bottom-right': '╝',
+                            'left': '║',
+                            'left-mid': '╟',
+                            'mid': '─',
+                            'mid-mid': '┼',
+                            'right': '║',
+                            'right-mid': '╢',
+                            'middle': '│'
+                        },
+                        style: {
+                            'padding-left': 3,
+                            'padding-right': 3,
+                            'padding-bottom': 4
+                        },
+                    });
+                    // table is an Array, so you can `push`, `unshift`, `splice` and friends 
+                    table.push({
+                        "Name": addressBook[0].firstName + " " +
+                            addressBook[0].lastName
+                    });
+                    if (addressBook[0].birthday) {
+                        table.push({
+                            "Date of birth": addressBook[0].birthday
+                        });
+                    }
+                    if (addressBook[0].addresses.home.line1) {
+                        table.push({
+                            "Home Address": addressBook[0].addresses.home.line1 + "\n" +
+                                addressBook[0].addresses.home.line2 + "\n" +
+                                addressBook[0].addresses.home.city + ", " +
+                                addressBook[0].addresses.home.province + "\n" +
+                                addressBook[0].addresses.home.postalCode + ", " +
+                                addressBook[0].addresses.home.country
+                        });
+                    }
+                    console.log(table.toString());
+                });
             });
         });
     }
     else if (menuChoice === "Find Existing Entry") {
-
         console.log("Sorry, this feature is not currently available");
-
     }
     else {
         return;
